@@ -76,57 +76,6 @@
     .episode-list li:hover {
       background: #555;
     }
-    .overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-    }
-    .overlay.active {
-      display: flex;
-    }
-    .player-container {
-      position: relative;
-      max-width: 800px;
-      width: 100%;
-      background: #000;
-      border-radius: 10px;
-      overflow: hidden;
-      padding: 20px;
-    }
-    .close-button {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: rgba(255, 255, 255, 0.8);
-      border: none;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-      z-index: 10;
-    }
-    .download-button {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 10px 20px;
-      background: #ffcc00;
-      color: #000;
-      text-decoration: none;
-      border-radius: 5px;
-      transition: background 0.3s;
-    }
-    .download-button:hover {
-      background: #e0b700;
-    }
   </style>
 </head>
 <body>
@@ -141,7 +90,7 @@
     <section>
       <h2>Doraemon Season 1 | All Episodes In Hindi</h2>
       <img src="https://img.rgstatic.com/content/show/4b75530a-30c1-4d19-9cc7-9ab793ec4e6b/backdrop-640.jpg" alt="Doraemon" class="doraemon-image">
-      <p><strong>Upload Date:</strong> 02 February, 2025</p>
+      <p><strong>Upload Date:</strong> 07 February, 2025</p>
       <p><strong>Total Episodes:</strong> 52</p>
       <p>The misadventures of Doraemon, a robot cat from the future, who with his gadgets, is sent back in time to help make Nobita Nobi, a boy without much talent, a better person.</p>
     </section>
@@ -154,16 +103,28 @@
 </main>
 
 <script>
-  document.getElementById('downloadButton').addEventListener('click', function(event) {
-    event.preventDefault();
-    const videoUrl = this.dataset.src;
-    const a = document.createElement('a');
-    a.href = videoUrl;
-    a.download = this.dataset.name;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  });
+  const episodeList = document.getElementById('episodeList');
+
+  fetch('/playlist.m3u')
+    .then(response => response.text())
+    .then(data => {
+      const lines = data.split('\n');
+      let title = '';
+      lines.forEach(line => {
+        if (line.startsWith('#EXTINF')) {
+          title = line.split(',')[1] || 'Unknown Episode';
+        } else if (line.trim() && !line.startsWith('#')) {
+          const listItem = document.createElement('li');
+          listItem.textContent = title;
+          listItem.dataset.src = line.trim();
+          listItem.addEventListener('click', () => {
+            window.location.href = line.trim();
+          });
+          episodeList.appendChild(listItem);
+        }
+      });
+    })
+    .catch(error => console.error('Error loading M3U:', error));
 </script>
 
 </body>

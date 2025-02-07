@@ -99,10 +99,10 @@
       border-radius: 10px;
       overflow: hidden;
     }
-    .close-button {
+    .close-button,
+    .download-button {
       position: absolute;
       top: 10px;
-      right: 10px;
       background: rgba(255, 255, 255, 0.8);
       border: none;
       border-radius: 50%;
@@ -113,18 +113,31 @@
       cursor: pointer;
       z-index: 10;
     }
+    .close-button {
+      right: 50px;
+    }
     .download-button {
-      display: inline-block;
-      margin-top: 10px;
+      right: 10px;
+    }
+    .download-button:hover,
+    .close-button:hover {
+      background: #e0b700;
+    }
+    .download-button {
       padding: 10px 20px;
       background: #ffcc00;
       color: #000;
       text-decoration: none;
       border-radius: 5px;
-      transition: background 0.3s;
     }
     .download-button:hover {
       background: #e0b700;
+    }
+    .episode-title {
+      text-align: center;
+      font-size: 1.5rem;
+      color: #ffcc00;
+      margin-top: 20px;
     }
   </style>
 </head>
@@ -132,7 +145,7 @@
 
 <header>
   <h1>Doraemon Season 1 | All Episodes In Hindi</h1>
-  <a href="index.html" class="home-button">Home</a>
+  <a href="https://toonimeworld.netlify.app/" class="home-button">Home</a>
 </header>
 
 <main>
@@ -155,6 +168,7 @@
     <button class="close-button" id="closeButton">&times;</button>
     <video id="player" controls></video>
     <a id="downloadButton" class="download-button" href="#" download>Download Episode</a>
+    <div class="episode-title" id="episodeTitle"></div>
   </div>
 </div>
 
@@ -165,6 +179,7 @@
   const player = document.getElementById('player');
   const closeButton = document.getElementById('closeButton');
   const downloadButton = document.getElementById('downloadButton');
+  const episodeTitle = document.getElementById('episodeTitle');
 
   const plyrPlayer = new Plyr(player);
 
@@ -175,12 +190,14 @@
       const lines = data.split('\n').filter(line => line.trim() !== '' && !line.startsWith('#'));
       lines.forEach((line, index) => {
         const listItem = document.createElement('li');
-        const name = `Episode ${index + 1}`; // Simple naming convention for episodes
+        const name = `Episode ${index + 1}`; // Use the episode number for naming
         listItem.textContent = name;
         listItem.dataset.src = line;
+        listItem.dataset.title = `Episode ${index + 1}`; // Set the title from the M3U data
         listItem.addEventListener('click', () => {
           player.src = line;
           plyrPlayer.play();
+          episodeTitle.textContent = listItem.dataset.title; // Show the title when the video starts
           overlay.classList.add('active');
           downloadButton.dataset.src = line;
           downloadButton.dataset.name = `${name}.mp4`;
@@ -198,7 +215,7 @@
     event.preventDefault();
     const videoUrl = downloadButton.dataset.src;
     const videoName = downloadButton.dataset.name;
-    
+
     if (videoUrl) {
       fetch(videoUrl)
         .then(response => response.blob())

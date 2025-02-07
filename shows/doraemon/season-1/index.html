@@ -107,6 +107,23 @@
       color: #ffcc00;
       font-size: 1.2rem;
     }
+    .info-box {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #2e2e2e;
+      border-radius: 8px;
+      color: #ffcc00;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .info-box img {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 <body>
@@ -119,6 +136,12 @@
 <main>
   <div class="content-box">
     <h2>Doraemon Season 1 | All Episodes In Hindi</h2>
+    <div class="info-box">
+      <img src="https://img.rgstatic.com/content/show/4b75530a-30c1-4d19-9cc7-9ab793ec4e6b/backdrop-640.jpg" alt="Doraemon Season 1">
+      <p><strong>Upload Date:</strong> 02 February, 2025</p>
+      <p><strong>Total Episodes:</strong> 52</p>
+      <p><strong>Description:</strong> The misadventures of Doraemon, a robot cat from the future, who with his gadgets, is sent back in time to help make Nobita Nobi, a boy without much talent, a better person.</p>
+    </div>
     <ul class="episode-list" id="episodeList"></ul>
   </div>
 </main>
@@ -144,13 +167,13 @@
   const videoTitle = document.getElementById('videoTitle');
   
   const plyrPlayer = new Plyr(player);
-  
+
   fetch('playlist.m3u')
     .then(response => response.text())
     .then(data => {
       const lines = data.split('\n').filter(line => line.trim() !== '');
       let title = '';
-      
+
       lines.forEach((line, index) => {
         if (line.startsWith('#EXTINF')) {
           title = line.split(',')[1] || `Episode ${index + 1}`;
@@ -159,38 +182,44 @@
           listItem.textContent = title;
           listItem.dataset.src = line;
           listItem.dataset.title = title;
-          
+
           listItem.addEventListener('click', () => {
             player.src = line;
             plyrPlayer.play();
             overlay.classList.add('active');
-            videoTitle.textContent = title;
+            videoTitle.textContent = listItem.dataset.title; // Fix player title
             downloadButton.dataset.src = line;
             downloadButton.dataset.name = `${title}.mp4`;
           });
-          
+
           episodeList.appendChild(listItem);
         }
       });
     });
-  
+
   closeButton.addEventListener('click', () => {
     overlay.classList.remove('active');
     plyrPlayer.pause();
   });
-  
+
   downloadButton.addEventListener('click', (event) => {
     event.preventDefault();
     const videoUrl = downloadButton.dataset.src;
     const videoName = downloadButton.dataset.name;
-    
+
     if (videoUrl) {
-      const a = document.createElement('a');
-      a.href = videoUrl;
-      a.download = videoName;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      fetch(videoUrl)
+        .then(response => response.blob())
+        .then(blob => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = videoName;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url); // Cleanup
+        });
     }
   });
 </script>

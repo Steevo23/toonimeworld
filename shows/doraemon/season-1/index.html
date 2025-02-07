@@ -118,19 +118,14 @@
     }
     .download-button {
       right: 10px;
-    }
-    .download-button:hover,
-    .close-button:hover {
-      background: #e0b700;
-    }
-    .download-button {
       padding: 10px 20px;
       background: #ffcc00;
       color: #000;
       text-decoration: none;
       border-radius: 5px;
     }
-    .download-button:hover {
+    .download-button:hover,
+    .close-button:hover {
       background: #e0b700;
     }
     .episode-title {
@@ -188,19 +183,25 @@
     .then(response => response.text())
     .then(data => {
       const lines = data.split('\n').filter(line => line.trim() !== '' && !line.startsWith('#'));
-      lines.forEach((line, index) => {
+      const episodes = [];
+      for (let i = 0; i < lines.length; i += 2) {
+        const title = lines[i].split(',')[1];
+        const url = lines[i + 1];
+        episodes.push({ title, url });
+      }
+
+      episodes.forEach((episode, index) => {
         const listItem = document.createElement('li');
-        const name = `Episode ${index + 1}`; // Use the episode number for naming
-        listItem.textContent = name;
-        listItem.dataset.src = line;
-        listItem.dataset.title = `Episode ${index + 1}`; // Set the title from the M3U data
+        listItem.textContent = episode.title;
+        listItem.dataset.src = episode.url;
+        listItem.dataset.title = episode.title;
         listItem.addEventListener('click', () => {
-          player.src = line;
+          player.src = episode.url;
           plyrPlayer.play();
-          episodeTitle.textContent = listItem.dataset.title; // Show the title when the video starts
+          episodeTitle.textContent = episode.title;
           overlay.classList.add('active');
-          downloadButton.dataset.src = line;
-          downloadButton.dataset.name = `${name}.mp4`;
+          downloadButton.dataset.src = episode.url;
+          downloadButton.dataset.name = `${episode.title}.mp4`;
         });
         episodeList.appendChild(listItem);
       });

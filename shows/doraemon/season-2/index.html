@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doraemon Season 1 | All Episodes In Hindi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #121212;
+      color: #f4f4f4;
+    }
+    header {
+      background-color: #1e1e1e;
+      padding: 20px;
+      text-align: center;
+      color: #ffcc00;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+    .home-button {
+      background: #ffcc00;
+      color: #000;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+    .home-button:hover {
+      background: #e0b700;
+    }
+    main {
+      padding: 40px 20px;
+    }
+    .content-box {
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    .doraemon-image {
+      display: block;
+      margin: 20px auto;
+      width: 100%;
+      max-width: 500px;
+      border-radius: 10px;
+    }
+    .episode-list {
+      list-style: none;
+      padding: 0;
+    }
+    .episode-list li {
+      background: #333;
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .episode-list li:hover {
+      background: #555;
+    }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .overlay.active {
+      display: flex;
+    }
+    .player-container {
+      position: relative;
+      max-width: 800px;
+      width: 100%;
+      background: #000;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 10;
+    }
+    .download-button {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #ffcc00;
+      color: #000;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+    .download-button:hover {
+      background: #e0b700;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Toonimeworld</h1>
+  <a href="index.html" class="home-button">Home</a>
+</header>
+
+<main>
+  <div class="content-box">
+    <section>
+      <h2>Doraemon Season 1 | All Episodes In Hindi</h2>
+      <img src="https://img.rgstatic.com/content/show/4b75530a-30c1-4d19-9cc7-9ab793ec4e6b/backdrop-640.jpg" alt="Doraemon" class="doraemon-image">
+      <p>The misadventures of Doraemon, a robot cat from the future, who with his gadgets, is sent back in time to help make Nobita Nobi, a boy without much talent, a better person.</p>
+    </section>
+
+    <section>
+      <h2>Episodes</h2>
+      <ul class="episode-list" id="episodeList"></ul>
+    </section>
+  </div>
+</main>
+
+<div class="overlay" id="overlay">
+  <div class="player-container">
+    <button class="close-button" id="closeButton">&times;</button>
+    <video id="player" controls></video>
+    <a id="downloadButton" class="download-button" href="#" download>Download Episode</a>
+  </div>
+</div>
+
+<script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+<script>
+  const episodeList = document.getElementById('episodeList');
+  const overlay = document.getElementById('overlay');
+  const player = document.getElementById('player');
+  const closeButton = document.getElementById('closeButton');
+  const downloadButton = document.getElementById('downloadButton');
+
+  const plyrPlayer = new Plyr(player);
+
+  // Fetch the m3u file
+  fetch('playlist.m3u')
+    .then(response => response.text())
+    .then(data => {
+      const lines = data.split('\n').filter(line => line.trim() !== '' && !line.startsWith('#'));
+      lines.forEach((line, index) => {
+        const listItem = document.createElement('li');
+        const name = `Episode ${index + 1}`; // Simple naming convention for episodes
+        listItem.textContent = name;
+        listItem.dataset.src = line;
+        listItem.addEventListener('click', () => {
+          player.src = line;
+          plyrPlayer.play();
+          overlay.classList.add('active');
+          downloadButton.dataset.src = line;
+          downloadButton.dataset.name = `${name}.mp4`;
+        });
+        episodeList.appendChild(listItem);
+      });
+    });
+
+  closeButton.addEventListener('click', () => {
+    overlay.classList.remove('active');
+    plyrPlayer.pause();
+  });
+
+  downloadButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    const videoUrl = downloadButton.dataset.src;
+    const videoName = downloadButton.dataset.name;
+    
+    if (videoUrl) {
+      fetch(videoUrl)
+        .then(response => response.blob())
+        .then(blob => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = videoName;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        });
+    }
+  });
+</script>
+
+</body>
+</html>

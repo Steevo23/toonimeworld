@@ -50,6 +50,21 @@
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
+    section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    .doraemon-image {
+      display: block;
+      margin: 20px auto;
+      width: 100%;
+      max-width: 500px;
+      border-radius: 10px;
+    }
+    .episode-list {
+      list-style: none;
+      padding: 0;
+    }
     .episode-list li {
       background: #333;
       margin: 10px 0;
@@ -83,29 +98,34 @@
       background: #000;
       border-radius: 10px;
       overflow: hidden;
-      padding: 10px;
+      padding: 20px;
     }
-    .controls {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px;
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 10;
     }
-    .close-button, .download-button {
+    .download-button {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
       background: #ffcc00;
       color: #000;
-      padding: 10px 15px;
-      border: none;
+      text-decoration: none;
       border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
+      transition: background 0.3s;
     }
-    .close-button:hover, .download-button:hover {
+    .download-button:hover {
       background: #e0b700;
-    }
-    #videoTitle {
-      color: #ffcc00;
-      font-size: 1.2rem;
     }
   </style>
 </head>
@@ -118,81 +138,33 @@
 
 <main>
   <div class="content-box">
-    <h2>Doraemon Season 1 | All Episodes In Hindi</h2>
-    <ul class="episode-list" id="episodeList"></ul>
+    <section>
+      <h2>Doraemon Season 1 | All Episodes In Hindi</h2>
+      <img src="https://img.rgstatic.com/content/show/4b75530a-30c1-4d19-9cc7-9ab793ec4e6b/backdrop-640.jpg" alt="Doraemon" class="doraemon-image">
+      <p><strong>Upload Date:</strong> 02 February, 2025</p>
+      <p><strong>Total Episodes:</strong> 52</p>
+      <p>The misadventures of Doraemon, a robot cat from the future, who with his gadgets, is sent back in time to help make Nobita Nobi, a boy without much talent, a better person.</p>
+    </section>
+
+    <section>
+      <h2>Episodes</h2>
+      <ul class="episode-list" id="episodeList"></ul>
+    </section>
   </div>
 </main>
 
-<div class="overlay" id="overlay">
-  <div class="player-container">
-    <div class="controls">
-      <span id="videoTitle"></span>
-      <button class="close-button" id="closeButton">Close</button>
-    </div>
-    <video id="player" controls></video>
-    <button class="download-button" id="downloadButton">Download</button>
-  </div>
-</div>
-
-<script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
 <script>
-  const episodeList = document.getElementById('episodeList');
-  const overlay = document.getElementById('overlay');
-  const player = document.getElementById('player');
-  const closeButton = document.getElementById('closeButton');
-  const downloadButton = document.getElementById('downloadButton');
-  const videoTitle = document.getElementById('videoTitle');
-  
-  const plyrPlayer = new Plyr(player);
-  
-  fetch('playlist.m3u')
-    .then(response => response.text())
-    .then(data => {
-      const lines = data.split('\n').filter(line => line.trim() !== '');
-      let title = '';
-      
-      lines.forEach((line, index) => {
-        if (line.startsWith('#EXTINF')) {
-          title = line.split(',')[1] || `Episode ${index + 1}`;
-        } else if (!line.startsWith('#')) {
-          const listItem = document.createElement('li');
-          listItem.textContent = title;
-          listItem.dataset.src = line;
-          listItem.dataset.title = title;
-          
-          listItem.addEventListener('click', () => {
-            player.src = line;
-            plyrPlayer.play();
-            overlay.classList.add('active');
-            videoTitle.textContent = title;
-            downloadButton.dataset.src = line;
-            downloadButton.dataset.name = `${title}.mp4`;
-          });
-          
-          episodeList.appendChild(listItem);
-        }
-      });
-    });
-  
-  closeButton.addEventListener('click', () => {
-    overlay.classList.remove('active');
-    plyrPlayer.pause();
-  });
-  
-  downloadButton.addEventListener('click', (event) => {
+  document.getElementById('downloadButton').addEventListener('click', function(event) {
     event.preventDefault();
-    const videoUrl = downloadButton.dataset.src;
-    const videoName = downloadButton.dataset.name;
-    
-    if (videoUrl) {
-      const a = document.createElement('a');
-      a.href = videoUrl;
-      a.download = videoName;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    }
+    const videoUrl = this.dataset.src;
+    const a = document.createElement('a');
+    a.href = videoUrl;
+    a.download = this.dataset.name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   });
 </script>
+
 </body>
 </html>

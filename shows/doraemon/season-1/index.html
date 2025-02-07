@@ -99,10 +99,10 @@
       border-radius: 10px;
       overflow: hidden;
     }
-    .close-button,
-    .download-button {
+    .close-button {
       position: absolute;
       top: 10px;
+      right: 10px;
       background: rgba(255, 255, 255, 0.8);
       border: none;
       border-radius: 50%;
@@ -113,42 +113,34 @@
       cursor: pointer;
       z-index: 10;
     }
-    .close-button {
-      right: 50px;
-    }
     .download-button {
-      right: 10px;
+      display: inline-block;
+      margin-top: 10px;
       padding: 10px 20px;
       background: #ffcc00;
       color: #000;
       text-decoration: none;
       border-radius: 5px;
+      transition: background 0.3s;
     }
-    .download-button:hover,
-    .close-button:hover {
+    .download-button:hover {
       background: #e0b700;
-    }
-    .episode-title {
-      text-align: center;
-      font-size: 1.5rem;
-      color: #ffcc00;
-      margin-top: 20px;
     }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>Doraemon Season 1 | All Episodes In Hindi</h1>
-  <a href="https://toonimeworld.netlify.app/" class="home-button">Home</a>
+  <h1>Toonimeworld</h1>
+  <a href="index.html" class="home-button">Home</a>
 </header>
 
 <main>
   <div class="content-box">
     <section>
-      <h2>Season 1 - Details</h2>
+      <h2>Doraemon Season 1 | All Episodes In Hindi</h2>
       <img src="https://img.rgstatic.com/content/show/4b75530a-30c1-4d19-9cc7-9ab793ec4e6b/backdrop-640.jpg" alt="Doraemon" class="doraemon-image">
-      <p>Doraemon is a robotic cat who travels back in time from the 22nd century to aid a schoolboy, Nobita Nobi.</p>
+      <p>The misadventures of Doraemon, a robot cat from the future, who with his gadgets, is sent back in time to help make Nobita Nobi, a boy without much talent, a better person.</p>
     </section>
 
     <section>
@@ -163,7 +155,6 @@
     <button class="close-button" id="closeButton">&times;</button>
     <video id="player" controls></video>
     <a id="downloadButton" class="download-button" href="#" download>Download Episode</a>
-    <div class="episode-title" id="episodeTitle"></div>
   </div>
 </div>
 
@@ -174,7 +165,6 @@
   const player = document.getElementById('player');
   const closeButton = document.getElementById('closeButton');
   const downloadButton = document.getElementById('downloadButton');
-  const episodeTitle = document.getElementById('episodeTitle');
 
   const plyrPlayer = new Plyr(player);
 
@@ -183,25 +173,17 @@
     .then(response => response.text())
     .then(data => {
       const lines = data.split('\n').filter(line => line.trim() !== '' && !line.startsWith('#'));
-      const episodes = [];
-      for (let i = 0; i < lines.length; i += 2) {
-        const title = lines[i].split(',')[1];
-        const url = lines[i + 1];
-        episodes.push({ title, url });
-      }
-
-      episodes.forEach((episode, index) => {
+      lines.forEach((line, index) => {
         const listItem = document.createElement('li');
-        listItem.textContent = episode.title;
-        listItem.dataset.src = episode.url;
-        listItem.dataset.title = episode.title;
+        const name = `Episode ${index + 1}`; // Simple naming convention for episodes
+        listItem.textContent = name;
+        listItem.dataset.src = line;
         listItem.addEventListener('click', () => {
-          player.src = episode.url;
+          player.src = line;
           plyrPlayer.play();
-          episodeTitle.textContent = episode.title;
           overlay.classList.add('active');
-          downloadButton.dataset.src = episode.url;
-          downloadButton.dataset.name = `${episode.title}.mp4`;
+          downloadButton.dataset.src = line;
+          downloadButton.dataset.name = `${name}.mp4`;
         });
         episodeList.appendChild(listItem);
       });
@@ -216,7 +198,7 @@
     event.preventDefault();
     const videoUrl = downloadButton.dataset.src;
     const videoName = downloadButton.dataset.name;
-
+    
     if (videoUrl) {
       fetch(videoUrl)
         .then(response => response.blob())

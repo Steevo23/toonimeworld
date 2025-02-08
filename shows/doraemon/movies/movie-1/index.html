@@ -145,72 +145,86 @@
 <script>
   const hlsUrl = 'https://vod3.cf.dmcdn.net/sec2(X90Fc7o6unBQ1EXAvlcUxikt8I7nYdSjhtKB3hTUsG66fnwePmo2NhtHmkFyvH27kcG6qOTZbLvXjqk0Oi5H3n-yt9wP3QuEg09X4-feTUU_nuGzf-D6DT5AEAty11isMSKMXJWu_oBYzCBVeaEDa-u4VLuuwyxTnl1PbQCR8-et-qgixCwmx2XkbsQabvbl)/video/089/974/565479980_mp4_h264_aac_hq_2.m3u8#cell=cf3';
 
-  // Plyr.js player
-  const plyrPlayer = new Plyr('#plyrPlayer');
-  const hls = new Hls();
-  hls.loadSource(hlsUrl);
-  hls.attachMedia(document.getElementById('plyrPlayer'));
+// Plyr.js setup
+const plyrPlayer = new Plyr('#plyrPlayer');
+const hls = new Hls();
+hls.loadSource(hlsUrl);
+hls.attachMedia(document.getElementById('plyrPlayer'));
+
+// Player containers
+const plyrContainer = document.getElementById('plyrPlayer');
+const jwContainer = document.getElementById('jwPlayerContainer');
+const dplayerContainer = document.getElementById('dplayerContainer');
+
+let dplayerInstance = null;
+let jwPlayerInstance = null;
+
+// JW Player setup
+const jwPlayerSetup = () => {
+  if (jwPlayerInstance) {
+    jwPlayerInstance.remove(); // Remove previous instance
+  }
+  jwContainer.innerHTML = '<div id="jwPlayer"></div>'; // Reset container
+  jwPlayerInstance = jwplayer('jwPlayer').setup({
+    file: hlsUrl,
+    width: '100%',
+    aspectratio: '16:9',
+    skin: { name: 'custom' }
+  });
+};
+
+// DPlayer setup
+const dplayerSetup = () => {
+  if (dplayerInstance) {
+    dplayerInstance.destroy(); // Destroy existing instance
+  }
+  dplayerContainer.innerHTML = ''; // Reset container
+  dplayerInstance = new DPlayer({
+    container: dplayerContainer,
+    live: false,
+    video: { url: hlsUrl, type: 'hls' }
+  });
+};
+
+// Function to hide all players
+const hideAllPlayers = () => {
+  plyrContainer.style.display = 'none';
+  jwContainer.style.display = 'none';
+  dplayerContainer.style.display = 'none';
+  
+  plyrPlayer.pause();
+  
+  if (jwPlayerInstance) {
+    jwPlayerInstance.remove(); // Destroy JW Player
+    jwPlayerInstance = null;
+  }
+  
+  if (dplayerInstance) {
+    dplayerInstance.destroy(); // Destroy DPlayer
+    dplayerInstance = null;
+  }
+};
+
+// Player switch event listeners
+document.getElementById('plyrButton').addEventListener('click', () => {
+  hideAllPlayers();
+  plyrContainer.style.display = 'block';
   plyrPlayer.play();
+});
 
-  // JW Player setup
-  const jwPlayerSetup = () => {
-    jwplayer('jwPlayerContainer').setup({
-      file: hlsUrl,
-      width: '100%',
-      aspectratio: '16:9',
-      skin: {
-        name: 'custom'
-      }
-    });
-  };
+document.getElementById('jwButton').addEventListener('click', () => {
+  hideAllPlayers();
+  jwContainer.style.display = 'block';
+  jwPlayerSetup();
+});
 
-  // DPlayer setup
-  const dplayerSetup = () => {
-    new DPlayer({
-      container: document.getElementById('dplayerContainer'),
-      live: false,
-      video: {
-        url: hlsUrl,
-        type: 'hls'
-      }
-    });
-  };
+document.getElementById('dplayerButton').addEventListener('click', () => {
+  hideAllPlayers();
+  dplayerContainer.style.display = 'block';
+  dplayerSetup();
+});
 
-  // Pause all players
-  const pauseAllPlayers = () => {
-    plyrPlayer.pause();
-    if (jwplayer().getState() === 'playing') {
-      jwplayer().pause();
-    }
-    if (dplayerInstance && dplayerInstance.video.paused === false) {
-      dplayerInstance.pause();
-    }
-  };
 
-  // Player selection logic
-  document.getElementById('plyrButton').addEventListener('click', () => {
-    pauseAllPlayers();
-    document.getElementById('plyrPlayer').style.display = 'block';
-    document.getElementById('jwPlayerContainer').style.display = 'none';
-    document.getElementById('dplayerContainer').style.display = 'none';
-    plyrPlayer.play();
-  });
-
-  document.getElementById('jwButton').addEventListener('click', () => {
-    pauseAllPlayers();
-    document.getElementById('plyrPlayer').style.display = 'none';
-    document.getElementById('jwPlayerContainer').style.display = 'block';
-    document.getElementById('dplayerContainer').style.display = 'none';
-    jwPlayerSetup();
-  });
-
-  document.getElementById('dplayerButton').addEventListener('click', () => {
-    pauseAllPlayers();
-    document.getElementById('plyrPlayer').style.display = 'none';
-    document.getElementById('jwPlayerContainer').style.display = 'none';
-    document.getElementById('dplayerContainer').style.display = 'block';
-    dplayerSetup();
-  });
 </script>
 
 </body>

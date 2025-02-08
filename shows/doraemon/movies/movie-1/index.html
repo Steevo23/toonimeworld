@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Doraemon: Nobita's Dinosaur (1980) Full Movie HINDI - Toonimeworld</title>
+  <title>Doraemon: Nobita's Dinosaur (1980) Full Movie HINDI</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css">
-  <link rel="stylesheet" href="styles.css"> <!-- JW Player custom styles -->
+  <link rel="stylesheet" href="styles.css"> <!-- Custom JW Player styles -->
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -15,7 +15,6 @@
       background-color: #121212;
       color: #f4f4f4;
     }
-
     header {
       background-color: #1e1e1e;
       padding: 20px;
@@ -24,13 +23,13 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     }
-
     header h1 {
       margin: 0;
-      font-size: 1.8rem;
+      font-size: 2rem;
+      font-weight: 600;
     }
-
     .home-button {
       background: #ffcc00;
       color: #000;
@@ -38,118 +37,72 @@
       text-decoration: none;
       border-radius: 5px;
       font-weight: 600;
-      transition: background 0.3s;
+      transition: background 0.3s, transform 0.2s;
     }
-
     .home-button:hover {
       background: #e0b700;
+      transform: scale(1.05);
     }
-
     main {
       padding: 40px 20px;
+      text-align: center;
     }
-
     .content-box {
       max-width: 1200px;
       margin: 0 auto;
       background-color: #1e1e1e;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     }
-
-    /* Improved Details Section */
     .info-box {
       margin-bottom: 20px;
       padding: 20px;
       background-color: #2e2e2e;
       border-radius: 8px;
-      display: flex;
-      align-items: flex-start;
-      gap: 20px;
+      color: #ffffff;
     }
-
     .info-box img {
       width: 100%;
-      max-width: 300px;
+      max-width: 600px;
       border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     }
-
-    .info-details {
+    .player-container {
+      margin-top: 20px;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       gap: 10px;
-      max-width: 700px;
     }
-
-    .info-details p {
-      margin: 0;
+    .player-container button {
+      background: #ffcc00;
+      color: #000;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background 0.3s, transform 0.2s;
+      cursor: pointer;
     }
-
-    .info-details strong {
-      font-weight: 600;
-      color: #ffcc00;
+    .player-container button:hover {
+      background: #e0b700;
+      transform: scale(1.05);
     }
-
-    /* Enhanced Player Section */
     .player-box {
+      margin-top: 20px;
       max-width: 800px;
-      margin: 20px auto;
+      margin-left: auto;
+      margin-right: auto;
       background: #000;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
       overflow: hidden;
       padding: 10px;
-      position: relative;
     }
-
     video {
       width: 100%;
       border-radius: 10px;
     }
-
-    .player-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.3);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      font-size: 2rem;
-      color: #ffcc00;
-    }
-
-    .switch-buttons {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-    }
-
-    .switch-buttons button {
-      background: #ffcc00;
-      color: #000;
-      padding: 12px 30px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 1rem;
-      transition: background 0.3s, transform 0.3s;
-    }
-
-    .switch-buttons button:hover {
-      background: #e0b700;
-      transform: scale(1.05);
-    }
-    
-    .switch-buttons button:active {
-      transform: scale(0.98);
-    }
-
   </style>
   <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
@@ -165,65 +118,55 @@
 
 <main>
   <div class="content-box">
-    <!-- Improved Details Section -->
+    <h2>Doraemon: Nobita's Dinosaur (1980) Full Movie HINDI</h2>
     <div class="info-box">
       <img src="https://m.media-amazon.com/images/M/MV5BYzQ2NjI0MTEtYWIwNC00NDUzLWI4OTktMDMyY2Y2NWYwNWQ3XkEyXkFqcGc@._V1_.jpg" alt="Doraemon Movie">
-      <div class="info-details">
-        <p><strong>Upload Date:</strong> 08 February, 2025</p>
-        <p><strong>Duration:</strong> 1 Hour 32 Minutes 19 Seconds</p>
-        <p><strong>Description:</strong> When Suneo does not show Nobita the fossil of a dinosaur claw, he takes up a challenge to find a dinosaur. He digs up a hillside and finds an egg, which later hatches and becomes a dinosaur.</p>
-      </div>
+      <p><strong>Upload Date:</strong> 08 February, 2025</p>
+      <p><strong>Duration:</strong> 1 Hour 32 Minutes 19 Seconds</p>
+      <p><strong>Description:</strong> When Suneo does not show Nobita the fossil of a dinosaur claw, he takes up a challenge to find a dinosaur. He digs up a hillside and finds an egg, which later hatches and becomes a dinosaur.</p>
     </div>
 
-    <!-- Enhanced Video Player Section -->
+    <!-- Player selection buttons -->
+    <div class="player-container">
+      <button id="plyrButton">Plyr.io</button>
+      <button id="jwButton">JW Player</button>
+      <button id="dplayerButton">DPlayer</button>
+    </div>
+
+    <!-- Video player box -->
     <div class="player-box" id="playerBox">
       <video id="plyrPlayer" controls></video>
       <div id="jwPlayerContainer" style="display:none;"></div>
       <div id="dplayerContainer" style="display:none;"></div>
-      <div class="player-overlay" id="playerOverlay">Loading...</div>
-    </div>
-
-    <!-- Player selection buttons -->
-    <div class="switch-buttons">
-      <button id="plyrButton">Plyr.io</button>
-      <button id="jwButton">JW Player</button>
-      <button id="dplayerButton">DPlayer</button>
     </div>
   </div>
 </main>
 
 <script>
-  const hlsUrl = 'https://vod3.cf.dmcdn.net/sec2(X90Fc7o6unBQ1EXAvlcUxikt8I7nYdSjhtKB3hTUsG66fnwePmo2NhtHmkFyvH27kcG6qOTZbLvXjqk0Oi5H3n-yt9wP3QuEg09X4-feTUU_nuGzf-D6DT5AEAty11isMSKMXJWu_oBYzCBVeaEDa-u4VLuuwyxTnl1PbQCR8';
+  const hlsUrl = 'https://vod3.cf.dmcdn.net/sec2(X90Fc7o6unBQ1EXAvlcUxikt8I7nYdSjhtKB3hTUsG66fnwePmo2NhtHmkFyvH27kcG6qOTZbLvXjqk0Oi5H3n-yt9wP3QuEg09X4-feTUU_nuGzf-D6DT5AEAty11isMSKMXJWu_oBYzCBVeaEDa-u4VLuuwyxTnl1PbQCR8-et-qgixCwmx2XkbsQabvbl)/video/089/974/565479980_mp4_h264_aac_hq_2.m3u8#cell=cf3';
 
+  // Plyr.js player
   const plyrPlayer = new Plyr('#plyrPlayer');
   const hls = new Hls();
   hls.loadSource(hlsUrl);
   hls.attachMedia(document.getElementById('plyrPlayer'));
   plyrPlayer.play();
 
-  const overlay = document.getElementById('playerOverlay');
-
-  const stopAllPlayers = () => {
-    plyrPlayer.pause();
-    if (jwplayer().getState() === 'playing') jwplayer().pause();
-    if (window.dplayer) window.dplayer.pause();
-  };
-
+  // JW Player setup
   const jwPlayerSetup = () => {
     jwplayer('jwPlayerContainer').setup({
       file: hlsUrl,
       width: '100%',
       aspectratio: '16:9',
       skin: {
-        name: 'custom' // Custom JW Player skin from styles.css
+        name: 'custom'
       }
-    }).on('ready', function() {
-      overlay.style.display = 'none';
     });
   };
 
+  // DPlayer setup
   const dplayerSetup = () => {
-    window.dplayer = new DPlayer({
+    new DPlayer({
       container: document.getElementById('dplayerContainer'),
       live: false,
       video: {
@@ -233,40 +176,42 @@
     });
   };
 
+  // Pause all players
+  const pauseAllPlayers = () => {
+    plyrPlayer.pause();
+    if (jwplayer().getState() === 'playing') {
+      jwplayer().pause();
+    }
+    if (dplayerInstance && dplayerInstance.video.paused === false) {
+      dplayerInstance.pause();
+    }
+  };
+
+  // Player selection logic
   document.getElementById('plyrButton').addEventListener('click', () => {
-    stopAllPlayers();
-    overlay.style.display = 'flex';
-    setTimeout(() => {
-      document.getElementById('plyrPlayer').style.display = 'block';
-      document.getElementById('jwPlayerContainer').style.display = 'none';
-      document.getElementById('dplayerContainer').style.display = 'none';
-      plyrPlayer.play();
-      overlay.style.display = 'none';
-    }, 500);
+    pauseAllPlayers();
+    document.getElementById('plyrPlayer').style.display = 'block';
+    document.getElementById('jwPlayerContainer').style.display = 'none';
+    document.getElementById('dplayerContainer').style.display = 'none';
+    plyrPlayer.play();
   });
 
   document.getElementById('jwButton').addEventListener('click', () => {
-    stopAllPlayers();
-    overlay.style.display = 'flex';
-    setTimeout(() => {
-      document.getElementById('plyrPlayer').style.display = 'none';
-      document.getElementById('jwPlayerContainer').style.display = 'block';
-      document.getElementById('dplayerContainer').style.display = 'none';
-      jwPlayerSetup();
-    }, 500);
+    pauseAllPlayers();
+    document.getElementById('plyrPlayer').style.display = 'none';
+    document.getElementById('jwPlayerContainer').style.display = 'block';
+    document.getElementById('dplayerContainer').style.display = 'none';
+    jwPlayerSetup();
   });
 
   document.getElementById('dplayerButton').addEventListener('click', () => {
-    stopAllPlayers();
-    overlay.style.display = 'flex';
-    setTimeout(() => {
-      document.getElementById('plyrPlayer').style.display = 'none';
-      document.getElementById('jwPlayerContainer').style.display = 'none';
-      document.getElementById('dplayerContainer').style.display = 'block';
-      dplayerSetup();
-      overlay.style.display = 'none';
-    }, 500);
+    pauseAllPlayers();
+    document.getElementById('plyrPlayer').style.display = 'none';
+    document.getElementById('jwPlayerContainer').style.display = 'none';
+    document.getElementById('dplayerContainer').style.display = 'block';
+    dplayerSetup();
   });
 </script>
+
 </body>
 </html>

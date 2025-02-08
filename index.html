@@ -142,79 +142,88 @@
     <p>&copy; 2025 Toonimeworld. Made by StevoSure. All rights reserved.</p>
   </footer>
 
-  <script>
-    const animeData = [
-      {
-        title: "Doraemon Season 1 | All Episodes In Hindi",
-        image: "https://img.rgstatic.com/content/show/4b75530a-30c1-4d19-9cc7-9ab793ec4e6b/backdrop-640.jpg",
-        description: "The misadventures of Doraemon, a robot cat from the future, who with his gadgets, is sent back in time to help make Nobita Nobi, a boy without much talent, a better person.",
-        uploadDate: "07 February, 2025",
-        totalEpisodes: 52,
-        link: "shows/doraemon/season-1/"
-      },
-      {
-        title: "Doraemon Season 2 | All Episodes In Hindi",
-        image: "https://img.rgstatic.com/content/show/4b75530a-30c1-4d19-9cc7-9ab793ec4e6b/backdrop-640.jpg",
-        description: "The misadventures of Doraemon, a robot cat from the future, who with his gadgets, is sent back in time to help make Nobita Nobi, a boy without much talent, a better person.",
-        uploadDate: "07 February, 2025",
-        totalEpisodes: 51,
-        link: "shows/doraemon/season-2/"
-      },
-      {
-        title: "Doraemon Season 18 | All Episodes In Hindi",
-        image: "https://doraemonworld2018.wordpress.com/wp-content/uploads/2018/04/cropped-doraemon-and-friends.jpg",
-        description: "The misadventures of Doraemon, a robot cat from the future, who with his gadgets, is sent back in time to help make Nobita Nobi, a boy without much talent, a better person.",
-        uploadDate: "07 February, 2025",
-        totalEpisodes: 52,
-        link: "shows/doraemon/season-18/"
-      }
-      // Add more anime objects here
-    ];
-
-    const animeGrid = document.getElementById('animeGrid');
-    const pagination = document.getElementById('pagination');
-    const itemsPerPage = 10;
-    let currentPage = 1;
-
-    function renderAnimeList(page) {
-      animeGrid.innerHTML = '';
-      const start = (page - 1) * itemsPerPage;
-      const end = start + itemsPerPage;
-      const paginatedData = animeData.slice(start, end);
-
-      paginatedData.forEach(anime => {
-        animeGrid.innerHTML += `
-          <div class="anime-item">
-            <a href="${anime.link}">
-              <img src="${anime.image}" alt="${anime.title}">
-              <h3>${anime.title}</h3>
-              <p><strong>Upload Date:</strong> ${anime.uploadDate}<br>
-                 <strong>Total Episodes:</strong> ${anime.totalEpisodes}<br><br>
-                 <strong>Description:</strong> ${anime.description}</p>
-            </a>
-          </div>
-        `;
-      });
-
-      renderPagination();
+<script>
+  const animeData = [
+    {
+      title: "Doraemon Season 1 | All Episodes In Hindi",
+      image: "https://img.rgstatic.com/content/show/4b75530a-30c1-4d19-9cc7-9ab793ec4e6b/backdrop-640.jpg",
+      description: "The misadventures of Doraemon, a robot cat from the future, who with his gadgets, is sent back in time to help make Nobita Nobi, a boy without much talent, a better person.",
+      uploadDate: "07 February, 2025",
+      totalEpisodes: 52,
+      link: "shows/doraemon/season-1/"
+    },
+    {
+      title: "Doraemon Season 2 | All Episodes In Hindi",
+      image: "https://img.rgstatic.com/content/show/4b75530a-30c1-4d19-9cc7-9ab793ec4e6b/backdrop-640.jpg",
+      description: "The misadventures of Doraemon, a robot cat from the future, who with his gadgets, is sent back in time to help make Nobita Nobi, a boy without much talent, a better person.",
+      uploadDate: "07 February, 2025",
+      totalEpisodes: 51,
+      link: "shows/doraemon/season-2/"
+    },
+    {
+      title: "Doraemon Season 18 | All Episodes In Hindi",
+      image: "https://doraemonworld2018.wordpress.com/wp-content/uploads/2018/04/cropped-doraemon-and-friends.jpg",
+      description: "The misadventures of Doraemon, a robot cat from the future, who with his gadgets, is sent back in time to help make Nobita Nobi, a boy without much talent, a better person.",
+      uploadDate: "07 February, 2025",
+      totalEpisodes: 52,
+      link: "shows/doraemon/season-18/"
+    },
+    {
+      title: "Doraemon: Nobita's Dinosaur (1980) Full Movie HINDI",
+      image: "https://m.media-amazon.com/images/M/MV5BYzQ2NjI0MTEtYWIwNC00NDUzLWI4OTktMDMyY2Y2NWYwNWQ3XkEyXkFqcGc@._V1_.jpg",
+      description: "The misadventures of Doraemon, a robot cat from the future, who with his gadgets, is sent back in time to help make Nobita Nobi, a boy without much talent, a better person.",
+      uploadDate: "07 February, 2025",
+      duration: "1 Hour 32 Minutes 19 Seconds",
+      link: "shows/doraemon/movies/movie-1/"
     }
+    // Add more anime objects here
+  ];
 
-    function renderPagination() {
-      pagination.innerHTML = '';
-      const totalPages = Math.ceil(animeData.length / itemsPerPage);
-      for (let i = 1; i <= totalPages; i++) {
-        pagination.innerHTML += `
-          <button onclick="changePage(${i})">${i}</button>
-        `;
-      }
+  const animeGrid = document.getElementById('animeGrid');
+  const pagination = document.getElementById('pagination');
+  const itemsPerPage = 10;
+  let currentPage = 1;
+
+  function renderAnimeList(page) {
+    animeGrid.innerHTML = '';
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const paginatedData = animeData.slice(start, end);
+
+    paginatedData.forEach(anime => {
+      animeGrid.innerHTML += `
+        <div class="anime-item">
+          <a href="${anime.link}">
+            <img src="${anime.image}" alt="${anime.title}">
+            <h3>${anime.title}</h3>
+            <p><strong>Upload Date:</strong> ${anime.uploadDate}<br>
+               ${anime.duration ? `<strong>Duration:</strong> ${anime.duration}<br>` : `<strong>Total Episodes:</strong> ${anime.totalEpisodes}<br>`}
+               <strong>Description:</strong> ${anime.description}
+            </p>
+          </a>
+        </div>
+      `;
+    });
+
+    renderPagination();
+  }
+
+  function renderPagination() {
+    pagination.innerHTML = '';
+    const totalPages = Math.ceil(animeData.length / itemsPerPage);
+    for (let i = 1; i <= totalPages; i++) {
+      pagination.innerHTML += `
+        <button onclick="changePage(${i})">${i}</button>
+      `;
     }
+  }
 
-    function changePage(page) {
-      currentPage = page;
-      renderAnimeList(currentPage);
-    }
-
+  function changePage(page) {
+    currentPage = page;
     renderAnimeList(currentPage);
-  </script>
+  }
+
+  renderAnimeList(currentPage);
+</script>
 </body>
 </html>

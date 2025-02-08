@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doraemon: Nobita's Dinosaur (1980) Full Movie HINDI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css">
+  <link rel="stylesheet" href="styles.css"> <!-- JW Player custom styles -->
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #121212;
+      color: #f4f4f4;
+    }
+    header {
+      background-color: #1e1e1e;
+      padding: 20px;
+      text-align: center;
+      color: #ffcc00;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+    main {
+      padding: 40px 20px;
+    }
+    .content-box {
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .info-box {
+      margin-bottom: 20px;
+      padding: 20px;
+      background-color: #2e2e2e;
+      border-radius: 8px;
+      color: #ffffff;
+      text-align: center;
+    }
+    .info-box img {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    .player-container {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .player-container button {
+      background: #ffcc00;
+      color: #000;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      margin: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .player-container button:hover {
+      background: #e0b700;
+    }
+    .player-box {
+      margin-top: 20px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      background: #000;
+      border-radius: 10px;
+      overflow: hidden;
+      padding: 10px;
+    }
+    video {
+      width: 100%;
+      border-radius: 10px;
+    }
+  </style>
+  <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dplayer@1.26.0/dist/DPlayer.min.js"></script>
+  <script src="https://cdn.jwplayer.com/libraries/IDzF9Zmk.js"></script>
+</head>
+<body>
+
+<header>
+  <h1>Doraemon: Nobita's Dinosaur (1980) Full Movie HINDI</h1>
+</header>
+
+<main>
+  <div class="content-box">
+    <h2>Watch Doraemon: Nobita's Dinosaur (1980) Full Movie HINDI</h2>
+    <div class="info-box">
+      <img src="https://m.media-amazon.com/images/M/MV5BYzQ2NjI0MTEtYWIwNC00NDUzLWI4OTktMDMyY2Y2NWYwNWQ3XkEyXkFqcGc@._V1_.jpg" alt="Doraemon Movie">
+      <p><strong>Upload Date:</strong> 08 February, 2025</p>
+      <p><strong>Duration:</strong> 1 Hour 32 Minutes 19 Seconds</p>
+    </div>
+
+    <!-- Player selection buttons -->
+    <div class="player-container">
+      <button id="plyrButton">Plyr.io</button>
+      <button id="jwButton">JW Player</button>
+      <button id="dplayerButton">DPlayer</button>
+    </div>
+
+    <!-- Video player box -->
+    <div class="player-box" id="playerBox">
+      <video id="plyrPlayer" controls></video>
+      <div id="jwPlayerContainer" style="display:none;"></div>
+      <div id="dplayerContainer" style="display:none;"></div>
+    </div>
+  </div>
+</main>
+
+<script>
+  const hlsUrl = 'https://vod3.cf.dmcdn.net/sec2(X90Fc7o6unBQ1EXAvlcUxikt8I7nYdSjhtKB3hTUsG66fnwePmo2NhtHmkFyvH27kcG6qOTZbLvXjqk0Oi5H3n-yt9wP3QuEg09X4-feTUU_nuGzf-D6DT5AEAty11isMSKMXJWu_oBYzCBVeaEDa-u4VLuuwyxTnl1PbQCR8-et-qgixCwmx2XkbsQabvbl)/video/089/974/565479980_mp4_h264_aac_hq_2.m3u8#cell=cf3';
+
+  // Plyr.js player
+  const plyrPlayer = new Plyr('#plyrPlayer');
+  const hls = new Hls();
+  hls.loadSource(hlsUrl);
+  hls.attachMedia(document.getElementById('plyrPlayer'));
+  plyrPlayer.play();
+
+  // JW Player setup
+  const jwPlayerSetup = () => {
+    document.getElementById('playerBox').innerHTML = '<div id="jwPlayer"></div>';
+    jwplayer('jwPlayer').setup({
+      file: hlsUrl,
+      width: '100%',
+      aspectratio: '16:9',
+      skin: {
+        name: 'custom' // Your custom JW Player skin (styles.css)
+      }
+    });
+  };
+
+  // DPlayer setup
+  const dplayerSetup = () => {
+    new DPlayer({
+      container: document.getElementById('dplayerContainer'),
+      live: false,
+      video: {
+        url: hlsUrl,
+        type: 'hls'
+      }
+    });
+  };
+
+  // Player selection logic
+  document.getElementById('plyrButton').addEventListener('click', () => {
+    document.getElementById('plyrPlayer').style.display = 'block';
+    document.getElementById('jwPlayerContainer').style.display = 'none';
+    document.getElementById('dplayerContainer').style.display = 'none';
+  });
+
+  document.getElementById('jwButton').addEventListener('click', () => {
+    document.getElementById('plyrPlayer').style.display = 'none';
+    document.getElementById('jwPlayerContainer').style.display = 'block';
+    document.getElementById('dplayerContainer').style.display = 'none';
+    jwPlayerSetup();
+  });
+
+  document.getElementById('dplayerButton').addEventListener('click', () => {
+    document.getElementById('plyrPlayer').style.display = 'none';
+    document.getElementById('jwPlayerContainer').style.display = 'none';
+    document.getElementById('dplayerContainer').style.display = 'block';
+    dplayerSetup();
+  });
+</script>
+
+</body>
+</html>

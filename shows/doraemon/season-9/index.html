@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doraemon Season 9 | All Episodes In Hindi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #121212;
+      color: #f4f4f4;
+    }
+    header {
+      background-color: #1e1e1e;
+      padding: 20px;
+      text-align: center;
+      color: #ffcc00;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+    .home-button {
+      background: #ffcc00;
+      color: #000;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+    .home-button:hover {
+      background: #e0b700;
+    }
+    main {
+      padding: 40px 20px;
+    }
+    .content-box {
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .episode-list li {
+      background: #333;
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .episode-list li:hover {
+      background: #555;
+    }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .overlay.active {
+      display: flex;
+    }
+    .player-container {
+      position: relative;
+      max-width: 800px;
+      width: 100%;
+      background: #000;
+      border-radius: 10px;
+      overflow: hidden;
+      padding: 10px;
+    }
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+    }
+    .close-button {
+      background: #ffcc00;
+      color: #000;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .close-button:hover {
+      background: #e0b700;
+    }
+    #videoTitle {
+      color: #ffcc00;
+      font-size: 1.2rem;
+    }
+    .info-box {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #2e2e2e;
+      border-radius: 8px;
+      color: #ffffff; /* Changed to white */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .info-box img {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Toonimeworld</h1>
+  <a href="https://toonimeworld.netlify.app/" class="home-button">Home</a>
+</header>
+
+<main>
+  <div class="content-box">
+    <h2>Doraemon Season 9 | All Episodes In Hindi</h2>
+    <div class="info-box">
+      <img src="https://img.rgstatic.com/content/show/4b75530a-30c1-4d19-9cc7-9ab793ec4e6b/backdrop-640.jpg" alt="Doraemon Season 3">
+      <p><strong>Upload Date:</strong> 11 February, 2025</p>
+      <p><strong>Total Episodes:</strong> 42</p>
+      <p><strong>Description:</strong> The misadventures of Doraemon, a robot cat from the future, who with his gadgets, is sent back in time to help make Nobita Nobi, a boy without much talent, a better person.</p>
+    </div>
+    <ul class="episode-list" id="episodeList"></ul>
+  </div>
+</main>
+
+<div class="overlay" id="overlay">
+  <div class="player-container">
+    <div class="controls">
+      <span id="videoTitle"></span>
+      <button class="close-button" id="closeButton">Close</button>
+    </div>
+    <video id="player" controls></video>
+  </div>
+</div>
+
+<script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+<script>
+  const episodeList = document.getElementById('episodeList');
+  const overlay = document.getElementById('overlay');
+  const player = document.getElementById('player');
+  const closeButton = document.getElementById('closeButton');
+  const videoTitle = document.getElementById('videoTitle');
+
+  const plyrPlayer = new Plyr(player, {type: 'video'});
+
+  fetch('playlist.m3u')
+    .then(response => response.text())
+    .then(data => {
+      const lines = data.split('\n').filter(line => line.trim() !== '');
+      let title = '';
+
+      lines.forEach((line, index) => {
+        if (line.startsWith('#EXTINF')) {
+          title = line.split(',')[1] || `Episode ${index + 1}`;
+        } else if (!line.startsWith('#')) {
+          const listItem = document.createElement('li');
+          listItem.textContent = title;
+          listItem.dataset.src = line;
+          listItem.dataset.title = title;
+
+          listItem.addEventListener('click', () => {
+            player.src = line;
+            plyrPlayer.play();
+            overlay.classList.add('active');
+            videoTitle.textContent = listItem.dataset.title; // Fix player title
+          });
+
+          episodeList.appendChild(listItem);
+        }
+      });
+    });
+
+  closeButton.addEventListener('click', () => {
+    overlay.classList.remove('active');
+    plyrPlayer.pause();
+  });
+</script>
+</body>
+</html>
